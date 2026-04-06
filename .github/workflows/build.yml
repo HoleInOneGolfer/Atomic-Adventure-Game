@@ -7,13 +7,34 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write # Required to create releases and tags
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Required to calculate the next version tag
 
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
+
+    - name: Auto-increment Version Tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        default_bump: patch # Increments the last number (1.0.1 -> 1.0.2)
+
+    - name: Inject Version into Code
+      shell: bash
+      run: |
+        # Replaces the placeholder in settings.py with the new tag
+        NEW_TAG="${{ steps.tag_version.outputs.new_tag }}"
+        echo "Injecting version $NEW_TAG into settings.py"
+        sed -i "s/v0.0.0-dev/$NEW_TAG/g" src/settings.py
 
     - name: Install dependencies
       run: |
@@ -22,10 +43,18 @@ jobs:
 
     - name: Run PyInstaller
       run: |
-        pyinstaller --noconsole --onefile --icon="atomic.ico" --name "Atomic Adventure" --add-data "src/settings.py;." --add-data "src/physics.py;." --add-data "src/entities.py;." --add-data "atomic.png;." src/main.py
+        pyinstaller --noconsole --onefile --icon="src/atomic.ico" --name "Atomic Adventure" --add-data "src/settings.py;." --add-data "src/physics.py;." --add-data "src/entities.py;." --add-data "src/atomic.png;." src/main.py
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
       with:
-        name: Atomic-Adventure-EXE
-        path: dist/Atomic Adventure.exe
+        tag_name: ${{ steps.tag_version.outputs.new_tag }}
+        name: Release ${{ steps.tag_version.outputs.new_tag }}
+        body: |
+          ### Changes in this version
+          ${{ steps.tag_version.outputs.changelog }}
+        files: dist/Atomic Adventure.exe
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

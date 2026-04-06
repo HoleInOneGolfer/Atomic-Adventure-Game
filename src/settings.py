@@ -5,6 +5,10 @@ settings.py: Global configuration and Periodic Table data.
 Centralizes constants to allow for easy balancing of game difficulty.
 """
 
+# --- Versioning ---
+# This is overwritten by the GitHub Action during build
+VERSION = "v0.0.0-dev"
+
 # Screen & GUI
 WIDTH, HEIGHT = 1200, 800
 GUI_HEIGHT = 40
