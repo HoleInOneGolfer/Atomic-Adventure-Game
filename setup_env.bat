@@ -6,9 +6,13 @@ if not exist venv (
     python -m venv venv
 )
 
-echo Installing dependencies...
-venv\Scripts\python.exe -m pip install --upgrade pip
-venv\Scripts\python.exe -m pip install pygame pyinstaller
+echo Installing/Upgrading essential build tools...
+venv\Scripts\python.exe -m pip install --upgrade pip setuptools wheel
+
+echo Installing Atomic Adventure dependencies...
+:: We use --only-binary to prevent it from trying to 'build' from source again
+venv\Scripts\python.exe -m pip install pygame==2.6.1 --only-binary=:all:
+venv\Scripts\python.exe -m pip install pyinstaller
 
 echo Setup complete. You can now run the Build Task (Ctrl+Shift+B).
 pause
