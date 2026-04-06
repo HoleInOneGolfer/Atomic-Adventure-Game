@@ -10,7 +10,7 @@
                 "--onefile",
                 "--icon=atomic.ico",
                 "--name",
-                "Atomic Adventure",
+                "AtomicAdventure",
                 "--add-data",
                 "src/settings.py;.",
                 "--add-data",
