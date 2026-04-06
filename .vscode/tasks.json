@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Atomic Adventure EXE",
+            "type": "shell",
+            "command": "${workspaceFolder}/venv/Scripts/pyinstaller",
+            "args": [
+                "--noconsole",
+                "--onefile",
+                "--icon=atomic.ico",
+                "--name",
+                "Atomic Adventure",
+                "--add-data",
+                "src/settings.py;.",
+                "--add-data",
+                "src/physics.py;.",
+                "--add-data",
+                "src/entities.py;.",
+                "--add-data",
+                "atomic.png;.",
+                "src/main.py"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+name: Build Release
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pygame pyinstaller
+
+    - name: Run PyInstaller
+      run: |
+        pyinstaller --noconsole --onefile --icon="src/atomic.ico" --name "Atomic Adventure" --add-data "src/settings.py;." --add-data "src/physics.py;." --add-data "src/entities.py;." --add-data "src/atomic.png;." src/main.py
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Atomic-Adventure-EXE
+        path: dist/Atomic Adventure.exe
