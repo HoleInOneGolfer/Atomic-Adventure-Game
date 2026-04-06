@@ -22,7 +22,7 @@ jobs:
 
     - name: Run PyInstaller
       run: |
-        pyinstaller --noconsole --onefile --icon="src/atomic.ico" --name "Atomic Adventure" --add-data "src/settings.py;." --add-data "src/physics.py;." --add-data "src/entities.py;." --add-data "src/atomic.png;." src/main.py
+        pyinstaller --noconsole --onefile --icon="atomic.ico" --name "Atomic Adventure" --add-data "src/settings.py;." --add-data "src/physics.py;." --add-data "src/entities.py;." --add-data "src/atomic.png;." src/main.py
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
