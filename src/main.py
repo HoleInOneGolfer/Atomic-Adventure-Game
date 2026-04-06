@@ -230,7 +230,7 @@ while running:
         s_text = sub_font.render(sub_text, True, WHITE)
         r_text = sub_font.render("Click anywhere to Restart", True, GRAY)
 
-        credit_lines = [f"Atomic Adventure {VERSION}","Developed by Ben","© 2026 Ben All rights reserved."]
+        credits_lines = [f"Atomic Adventure {VERSION}","Developed by Ben","© 2026 Ben All rights reserved."]
 
         screen.blit(m_text, (w // 2 - m_text.get_width() // 2, h // 2 - 120))
         screen.blit(s_text, (w // 2 - s_text.get_width() // 2, h // 2 - 40))
