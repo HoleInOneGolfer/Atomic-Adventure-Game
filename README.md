@@ -74,7 +74,7 @@ python src/main.py
 The project is configured for PyInstaller. Run this from the root directory to generate a standalone .exe:
 
 ```bash
-pyinstaller --noconsole --onefile --icon="atomic.ico" --name "Atomic Adventure" --add-data "src/settings.py;." --add-data "src/physics.py;." --add-data "src/entities.py;." --add-data "atomic.png;." src/main.py
+pyinstaller --noconsole --onefile --icon="atomic.ico" --name "AtomicAdventure" --add-data "src/settings.py;." --add-data "src/physics.py;." --add-data "src/entities.py;." --add-data "atomic.png;." src/main.py
 ```
 
 ## 💡Original Idea
